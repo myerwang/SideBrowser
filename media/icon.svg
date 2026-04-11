@@ -1,0 +1,26 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="16" y="16" width="224" height="224" rx="48" fill="#0C2533"/>
+  
+  <!-- Window -->
+  <rect x="36" y="48" width="184" height="160" rx="20" fill="#153243"/>
+  
+  <!-- Top bar -->
+  <path d="M36 68C36 56.9543 44.9543 48 56 48H200C211.046 48 220 56.9543 220 68V80H36V68Z" fill="#0C1B26"/>
+  <circle cx="60" cy="64" r="6" fill="#FF5F56"/>
+  <circle cx="80" cy="64" r="6" fill="#FFBD2E"/>
+  <circle cx="100" cy="64" r="6" fill="#27C93F"/>
+
+  <!-- Pane Splitter -->
+  <rect x="124" y="80" width="8" height="128" fill="#0C1B26"/>
+
+  <!-- Left: Code -->
+  <path d="M76 128L58 144L76 160" stroke="#48B4C4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M96 128L114 144L96 160" stroke="#48B4C4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Right: Webpage -->
+  <rect x="148" y="110" width="48" height="10" rx="5" fill="#E6A845"/>
+  <rect x="148" y="132" width="36" height="8" rx="4" fill="#E6A845" fill-opacity="0.6"/>
+  <rect x="148" y="152" width="40" height="8" rx="4" fill="#E6A845" fill-opacity="0.6"/>
+  <rect x="148" y="172" width="24" height="8" rx="4" fill="#E6A845" fill-opacity="0.6"/>
+</svg>

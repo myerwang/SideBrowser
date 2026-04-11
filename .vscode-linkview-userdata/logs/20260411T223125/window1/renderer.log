@@ -1,0 +1,16 @@
+2026-04-11 22:31:28.629 [info] Started local extension host with pid 1480.
+2026-04-11 22:31:29.946 [warning] [salesforcedx-einstein-gpt]: Couldn't find message for key salesforcedx-einstein-gpt.icons.vibe-codey.description.
+2026-04-11 22:31:30.375 [error] Ignoring python.analysis.indexing.followSymlinkedFolders as python.analysis.indexing is true
+2026-04-11 22:31:30.565 [error] Ignoring python.analysis.indexing.followSymlinkedFolders as python.analysis.indexing is true
+2026-04-11 22:31:32.513 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2026-04-11 22:31:34.531 [info] [perf] Render performance baseline is 43ms
+2026-04-11 22:31:36.456 [error] [salesforce.apex-language-server-extension]: property `icon` is mandatory and must be of type `string`
+2026-04-11 22:31:39.318 [error] [Extension Host] (node:1480) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `Code --trace-deprecation ...` to show where the warning was created)
+2026-04-11 22:31:39.319 [error] [Extension Host] (node:1480) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+2026-04-11 22:31:40.038 [error] Canceled: Error: Canceled
+    at Lro (vscode-file://vscode-app/c:/Users/89961/AppData/Local/Programs/Microsoft%20VS%20Code/41dd792b5e/resources/app/out/vs/workbench/workbench.desktop.main.js:1005:17114)
+    at vscode-file://vscode-app/c:/Users/89961/AppData/Local/Programs/Microsoft%20VS%20Code/41dd792b5e/resources/app/out/vs/workbench/workbench.desktop.main.js:4962:12122
+    at async vscode-file://vscode-app/c:/Users/89961/AppData/Local/Programs/Microsoft%20VS%20Code/41dd792b5e/resources/app/out/vs/workbench/workbench.desktop.main.js:4962:9904
+    at async O3o (vscode-file://vscode-app/c:/Users/89961/AppData/Local/Programs/Microsoft%20VS%20Code/41dd792b5e/resources/app/out/vs/workbench/workbench.desktop.main.js:1008:5492)
+    at async Promise.all (index 1)

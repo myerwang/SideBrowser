@@ -1,0 +1,10 @@
+2026-04-11 22:32:37.915 [info] Extension host with pid 31284 started
+2026-04-11 22:32:37.915 [info] Skipping acquiring lock for c:\Task\000Project\LinkView\.vscode-linkview-userdata\User\workspaceStorage\0d3c082e559ebb568c76add2d018e61f.
+2026-04-11 22:32:38.364 [info] ExtensionService#_doActivateExtension vscode.github-authentication, startup: false, activationEvent: 'onAuthenticationRequest:github'
+2026-04-11 22:32:38.426 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onLanguage'
+2026-04-11 22:32:38.462 [info] ExtensionService#_doActivateExtension GitHub.copilot-chat, startup: false, activationEvent: 'onChatParticipant:github.copilot.editsAgent'
+2026-04-11 22:32:41.338 [info] ExtensionService#_doActivateExtension openai.chatgpt, startup: false, activationEvent: 'onChatSession:openai-codex'
+2026-04-11 22:32:41.652 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*', root cause: vscode.git
+2026-04-11 22:32:41.660 [info] ExtensionService#_doActivateExtension salesforce.salesforcedx-vscode-services, startup: true, activationEvent: '*'
+2026-04-11 22:32:44.199 [info] Extension host terminating: received terminate message from renderer
+2026-04-11 22:32:44.212 [info] Extension host with pid 31284 exiting with code 0

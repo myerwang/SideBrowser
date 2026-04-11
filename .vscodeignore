@@ -1,0 +1,9 @@
+.github/**
+.vscode/**
+.vscode-linkview-userdata/**
+src/**
+test/**
+out-test/**
+tsconfig.test.json
+package-lock.json
+debug.log

@@ -1,0 +1,122 @@
+{
+  "name": "sidebrowser",
+  "displayName": "SideBrowser",
+  "description": "Open test pages and localhost apps beside your code in the same VS Code screen.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "publisher": "local",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/myerwang/LinkView.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onUri",
+    "onCommand:linkView.open",
+    "onCommand:linkView.openUrl",
+    "onCommand:linkView.refresh",
+    "onCommand:linkView.openExternal",
+    "onCommand:linkView.newLinkFile"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "SideBrowser",
+      "properties": {
+        "linkView.externalBrowser.kind": {
+          "type": "string",
+          "enum": [
+            "system",
+            "edge",
+            "chrome",
+            "firefox",
+            "safari",
+            "custom"
+          ],
+          "default": "system",
+          "markdownDescription": "Select which browser SideBrowser should use for `Open in External Browser`. `system` uses the OS default browser. `safari` is only available on macOS."
+        },
+        "linkView.externalBrowser.customPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Absolute path to a browser executable when `linkView.externalBrowser.kind` is set to `custom`."
+        },
+        "linkView.externalBrowser.customArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Optional extra arguments passed before the URL when launching the configured custom browser."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "linkview-link",
+        "aliases": [
+          "Link File",
+          "link"
+        ],
+        "extensions": [
+          ".link"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "linkView.open",
+        "title": "Open in SideBrowser",
+        "category": "SideBrowser"
+      },
+      {
+        "command": "linkView.openUrl",
+        "title": "Open URL in SideBrowser",
+        "category": "SideBrowser"
+      },
+      {
+        "command": "linkView.refresh",
+        "title": "Refresh SideBrowser",
+        "category": "SideBrowser"
+      },
+      {
+        "command": "linkView.openExternal",
+        "title": "Open in External Browser",
+        "category": "SideBrowser"
+      },
+      {
+        "command": "linkView.newLinkFile",
+        "title": "New Link File",
+        "category": "SideBrowser"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "linkView.open",
+          "when": "resourceExtname =~ /\\.(link|html?|xhtml|shtml|md|markdown|mdown|mkd|pdf|png|jpe?g|gif|bmp|webp|svg|ico|avif|tiff?|mp3|wav|ogg|flac|m4a|aac|mp4|webm|ogv|mov|ipynb)$/i || explorerResourceIsFolder",
+          "group": "navigation@10"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "compile:tests": "tsc -p ./tsconfig.test.json",
+    "test:unit": "npm run compile:tests && node out-test/test/runUnitTests.js",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.5"
+  }
+}
