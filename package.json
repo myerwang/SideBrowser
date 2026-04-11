@@ -4,7 +4,7 @@
   "description": "Open test pages and localhost apps beside your code in the same VS Code screen.",
   "version": "0.0.1",
   "license": "MIT",
-  "publisher": "local",
+  "publisher": "YohjiUbun",
   "icon": "media/icon.png",
   "repository": {
     "type": "git",
