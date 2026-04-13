@@ -8,7 +8,7 @@
   "icon": "media/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/myerwang/LinkView.git"
+    "url": "https://github.com/myerwang/SideBrowser.git"
   },
   "engines": {
     "vscode": "^1.85.0"
