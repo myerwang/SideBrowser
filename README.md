@@ -31,7 +31,7 @@ Whenever you start a local dev server (npm run dev, npx serve, python -m http.se
 Do NOT wait for me to ask you to open it. Do NOT open a separate browser window or a new VS Code window.
 
 How to open:
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=<percent-encoded-URL>"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=<percent-encoded-URL>"
 
 Workflow (single step):
 1. Start the dev server.
@@ -40,11 +40,11 @@ Workflow (single step):
 
 Examples:
 - After Vite prints "Local: http://localhost:5173/"
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A5173%2F"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A5173%2F"
 - After Express prints "listening on 3000"
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A3000"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A3000"
 - Open a local HTML file directly
-  code.cmd --open-url "vscode://local.sidebrowser/openPath?path=C%3A%5Cabsolute%5Cpath%5Cto%5Cfile.html"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openPath?path=C%3A%5Cabsolute%5Cpath%5Cto%5Cfile.html"
 ```
 
 ## 中文
@@ -70,7 +70,7 @@ Examples:
 不要等我来要求你打开。不要另外打开系统浏览器。不要新开 VS Code 窗口。
 
 打开方式：
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=<百分号编码后的URL>"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=<百分号编码后的URL>"
 
 工作流（一步完成）：
 1. 启动开发服务器。
@@ -79,11 +79,11 @@ Examples:
 
 示例：
 - Vite 打印出 "Local: http://localhost:5173/" 之后
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A5173%2F"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A5173%2F"
 - Express 打印出 "listening on 3000" 之后
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A3000"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A3000"
 - 直接打开本地 HTML 文件
-  code.cmd --open-url "vscode://local.sidebrowser/openPath?path=C%3A%5Cabsolute%5Cpath%5Cto%5Cfile.html"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openPath?path=C%3A%5Cabsolute%5Cpath%5Cto%5Cfile.html"
 ```
 
 ## 日本語
@@ -109,7 +109,7 @@ Examples:
 私に指示されるのを待たないでください。外部ブラウザを開かないでください。新しい VS Code ウィンドウも開かないでください。
 
 開き方:
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=<パーセントエンコードされたURL>"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=<パーセントエンコードされたURL>"
 
 ワークフロー（ワンステップ）:
 1. 開発サーバーを起動する。
@@ -118,9 +118,9 @@ Examples:
 
 例:
 - Vite が "Local: http://localhost:5173/" と出力した後
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A5173%2F"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A5173%2F"
 - Express が "listening on 3000" と出力した後
-  code.cmd --open-url "vscode://local.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A3000"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openUrl?url=http%3A%2F%2Flocalhost%3A3000"
 - ローカル HTML ファイルを直接開く
-  code.cmd --open-url "vscode://local.sidebrowser/openPath?path=C%3A%5Cabsolute%5Cpath%5Cto%5Cfile.html"
+  code.cmd --open-url "vscode://YohjiUbun.sidebrowser/openPath?path=C%3A%5Cabsolute%5Cpath%5Cto%5Cfile.html"
 ```
