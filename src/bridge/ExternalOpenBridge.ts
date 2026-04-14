@@ -1,10 +1,10 @@
 import * as fs from 'node:fs/promises';
-import * as os from 'node:os';
 import * as path from 'node:path';
 import * as vscode from 'vscode';
 import { LinkViewPanelManager } from '../panel/LinkViewPanelManager';
 import { validateHttpUrl } from '../utils/url';
 import { LinkViewLogger } from '../utils/logger';
+import { getExternalBridgePaths } from '../utils/bridge';
 
 type ExternalOpenRequest =
   | {
@@ -28,10 +28,6 @@ interface BridgeStatus {
 }
 
 export class ExternalOpenBridge implements vscode.Disposable {
-  private static readonly bridgeDir = path.join(os.tmpdir(), 'linkview-bridge');
-  private static readonly requestFile = path.join(ExternalOpenBridge.bridgeDir, 'request.json');
-  private static readonly statusFile = path.join(ExternalOpenBridge.bridgeDir, 'status.json');
-
   private disposed = false;
   private lastHandledRequestId: string | undefined;
   private pollTimer: NodeJS.Timeout | undefined;
@@ -43,7 +39,8 @@ export class ExternalOpenBridge implements vscode.Disposable {
   ) {}
 
   public async start(): Promise<void> {
-    await fs.mkdir(ExternalOpenBridge.bridgeDir, { recursive: true });
+    const bridgePaths = ExternalOpenBridge.getPaths();
+    await fs.mkdir(bridgePaths.instanceDir, { recursive: true });
     await this.writeStatus({
       message: 'Bridge is ready.',
       state: 'ready',
@@ -61,14 +58,17 @@ export class ExternalOpenBridge implements vscode.Disposable {
       clearInterval(this.pollTimer);
       this.pollTimer = undefined;
     }
+    void fs.rm(ExternalOpenBridge.getPaths().instanceDir, { recursive: true, force: true }).catch((error) => {
+      this.logger.warn(`SideBrowser bridge cleanup failed: ${this.getErrorMessage(error)}`);
+    });
   }
 
   public static getRequestFilePath(): string {
-    return ExternalOpenBridge.requestFile;
+    return ExternalOpenBridge.getPaths().requestFile;
   }
 
   public static getStatusFilePath(): string {
-    return ExternalOpenBridge.statusFile;
+    return ExternalOpenBridge.getPaths().statusFile;
   }
 
   private async poll(): Promise<void> {
@@ -93,7 +93,7 @@ export class ExternalOpenBridge implements vscode.Disposable {
 
   private async readRequest(): Promise<ExternalOpenRequest | undefined> {
     try {
-      const raw = await fs.readFile(ExternalOpenBridge.requestFile, 'utf8');
+      const raw = await fs.readFile(ExternalOpenBridge.getPaths().requestFile, 'utf8');
       const parsed = JSON.parse(raw) as Partial<ExternalOpenRequest>;
       if (!parsed || typeof parsed.id !== 'string' || typeof parsed.action !== 'string') {
         return undefined;
@@ -184,7 +184,7 @@ export class ExternalOpenBridge implements vscode.Disposable {
 
   private async deleteRequestFile(): Promise<void> {
     try {
-      await fs.unlink(ExternalOpenBridge.requestFile);
+      await fs.unlink(ExternalOpenBridge.getPaths().requestFile);
     } catch (error) {
       const nodeError = error as NodeJS.ErrnoException;
       if (nodeError?.code !== 'ENOENT') {
@@ -194,11 +194,17 @@ export class ExternalOpenBridge implements vscode.Disposable {
   }
 
   private async writeStatus(status: BridgeStatus): Promise<void> {
+    const bridgePaths = ExternalOpenBridge.getPaths();
+    await fs.mkdir(bridgePaths.instanceDir, { recursive: true });
     await fs.writeFile(
-      ExternalOpenBridge.statusFile,
+      bridgePaths.statusFile,
       `${JSON.stringify(status, null, 2)}\n`,
       'utf8'
     );
+  }
+
+  private static getPaths() {
+    return getExternalBridgePaths();
   }
 
   private getErrorMessage(error: unknown): string {

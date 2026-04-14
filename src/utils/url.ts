@@ -30,3 +30,11 @@ export function validateHttpUrl(value: string): UrlValidationResult {
     };
   }
 }
+
+export function isFileUrl(value: string): boolean {
+  try {
+    return new URL(value).protocol === 'file:';
+  } catch {
+    return false;
+  }
+}

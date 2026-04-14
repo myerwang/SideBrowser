@@ -2,7 +2,7 @@
   "name": "sidebrowser",
   "displayName": "SideBrowser",
   "description": "Open test pages and localhost apps beside your code in the same VS Code screen.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "publisher": "YohjiUbun",
   "icon": "media/icon.png",
@@ -56,6 +56,24 @@
           },
           "default": [],
           "markdownDescription": "Optional extra arguments passed before the URL when launching the configured custom browser."
+        },
+        "linkView.previewMode": {
+          "type": "string",
+          "enum": [
+            "nativeBrowser",
+            "webview"
+          ],
+          "default": "nativeBrowser",
+          "markdownDescription": "Preferred in-editor preview surface. `nativeBrowser` uses VS Code's browser preview when available. `webview` uses SideBrowser's custom iframe-based panel."
+        },
+        "linkView.previewFallbackMode": {
+          "type": "string",
+          "enum": [
+            "externalBrowser",
+            "webview"
+          ],
+          "default": "externalBrowser",
+          "markdownDescription": "Fallback when `linkView.previewMode` is `nativeBrowser` but VS Code's browser preview cannot open the target."
         }
       }
     },

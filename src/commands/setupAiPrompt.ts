@@ -92,6 +92,8 @@ interface AiTarget {
   cursorFrontmatter?: boolean;
   /** If true, store as JSON in .gemini/settings.json. */
   geminiJson?: boolean;
+  /** If true, append to existing file instead of overwriting it. */
+  appendIfExists?: boolean;
 }
 
 const AI_TARGETS: AiTarget[] = [
@@ -125,6 +127,13 @@ const AI_TARGETS: AiTarget[] = [
     description: '.continue/rules/sidebrowser.md',
     id: 'continue',
     relPath: '.continue/rules/sidebrowser.md'
+  },
+  {
+    label: 'Codex',
+    description: 'AGENTS.md',
+    id: 'codex',
+    relPath: 'AGENTS.md',
+    appendIfExists: true
   },
   {
     label: 'Gemini CLI',
@@ -242,8 +251,8 @@ async function installFilePrompt(
       skipped.push(`${target.label} (already configured)`);
       return;
     }
-    // For copilot-instructions.md, append instead of overwrite
-    if (target.id === 'copilot') {
+
+    if (target.appendIfExists || target.id === 'copilot') {
       const merged = existing + '\n\n' + content;
       await writeFileText(fileUri, merged);
       installed.push(`${target.label} → ${target.relPath} (appended)`);
@@ -308,8 +317,18 @@ async function readFileText(uri: vscode.Uri): Promise<string> {
 }
 
 async function writeFileText(uri: vscode.Uri, content: string): Promise<void> {
+  await ensureParentDirectory(uri);
   const bytes = Buffer.from(content, 'utf-8');
   await vscode.workspace.fs.writeFile(uri, bytes);
+}
+
+async function ensureParentDirectory(fileUri: vscode.Uri): Promise<void> {
+  const parentPath = path.posix.dirname(fileUri.path);
+  if (!parentPath || parentPath === fileUri.path) {
+    return;
+  }
+
+  await vscode.workspace.fs.createDirectory(fileUri.with({ path: parentPath }));
 }
 
 function buildSummary(installed: string[], skipped: string[]): string {

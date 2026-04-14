@@ -10,6 +10,7 @@
     - Cursor           (.cursor/rules/sidebrowser.mdc)
     - Windsurf         (.windsurf/rules/sidebrowser.md)
     - Continue         (.continue/rules/sidebrowser.md)
+    - Codex            (AGENTS.md)
     - Gemini CLI       (.gemini/settings.json — style/rules append)
 
 .PARAMETER WorkspacePath
@@ -20,7 +21,7 @@
 
 .PARAMETER Targets
   Comma-separated list of targets to install. Use 'all' to install all.
-  Valid values: copilot, cline, cursor, windsurf, continue, gemini, all.
+  Valid values: copilot, cline, cursor, windsurf, continue, codex, gemini, all.
   Default: 'all'.
 
 .EXAMPLE
@@ -130,7 +131,7 @@ $Prompt = switch ($Lang) {
 
 # ─── Determine targets ───────────────────────────────────────────────────────
 
-$AllTargets = @('copilot', 'cline', 'cursor', 'windsurf', 'continue', 'gemini')
+$AllTargets = @('copilot', 'cline', 'cursor', 'windsurf', 'continue', 'codex', 'gemini')
 if ($Targets -eq 'all') {
     $SelectedTargets = $AllTargets
 } else {
@@ -212,6 +213,25 @@ if ($SelectedTargets -contains 'continue') {
     $ContinuePath = ".continue/rules/sidebrowser.md"
     Write-PromptFile $ContinuePath $Prompt | Out-Null
     $Installed += "Continue -> $ContinuePath"
+}
+
+# ─── Codex ───────────────────────────────────────────────────────────────────
+
+if ($SelectedTargets -contains 'codex') {
+    $CodexPath = "AGENTS.md"
+    $FullPath = Join-Path $WorkspacePath $CodexPath
+    if (Test-Path $FullPath) {
+        $Existing = Get-Content $FullPath -Raw -ErrorAction SilentlyContinue
+        if ($Existing -match 'SideBrowser') {
+            $Skipped += "Codex (already contains SideBrowser rules)"
+        } else {
+            Add-Content -Path $FullPath -Value "`n`n$Prompt" -Encoding UTF8
+            $Installed += "Codex    -> $CodexPath (appended)"
+        }
+    } else {
+        Write-PromptFile $CodexPath $Prompt | Out-Null
+        $Installed += "Codex    -> $CodexPath (created)"
+    }
 }
 
 # ─── Gemini CLI ──────────────────────────────────────────────────────────────

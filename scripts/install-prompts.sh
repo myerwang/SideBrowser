@@ -22,7 +22,7 @@ while [[ $# -gt 0 ]]; do
     --lang)      LANG_OPT="$2"; shift 2 ;;
     --targets)   TARGETS="$2";  shift 2 ;;
     -h|--help)
-      echo "Usage: $0 [--workspace <path>] [--lang en|zh|ja] [--targets copilot,cline,cursor,windsurf,continue,gemini|all]"
+      echo "Usage: $0 [--workspace <path>] [--lang en|zh|ja] [--targets copilot,cline,cursor,windsurf,continue,codex,gemini|all]"
       exit 0 ;;
     *) echo "Unknown option: $1"; exit 1 ;;
   esac
@@ -124,7 +124,7 @@ esac
 
 # ─── Determine targets ──────────────────────────────────────────────────────
 
-ALL_TARGETS="copilot cline cursor windsurf continue gemini"
+ALL_TARGETS="copilot cline cursor windsurf continue codex gemini"
 if [[ "$TARGETS" == "all" ]]; then
   SELECTED=($ALL_TARGETS)
 else
@@ -193,6 +193,20 @@ $PROMPT"
       FILE=".continue/rules/sidebrowser.md"
       write_prompt_file "$FILE" "$PROMPT"
       INSTALLED+=("Continue -> $FILE")
+      ;;
+
+    codex)
+      FILE="AGENTS.md"
+      FULL="$WORKSPACE/$FILE"
+      if [[ -f "$FULL" ]] && grep -q "SideBrowser" "$FULL"; then
+        SKIPPED+=("Codex (already contains SideBrowser rules)")
+      elif [[ -f "$FULL" ]]; then
+        printf '\n\n%s\n' "$PROMPT" >> "$FULL"
+        INSTALLED+=("Codex    -> $FILE (appended)")
+      else
+        write_prompt_file "$FILE" "$PROMPT"
+        INSTALLED+=("Codex    -> $FILE (created)")
+      fi
       ;;
 
     gemini)

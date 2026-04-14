@@ -10,6 +10,7 @@ import {
   openFileInDefaultEditor,
   openUrlInLocalBrowserKernel
 } from '../utils/preview';
+import { isFileUrl } from '../utils/url';
 import { getWebviewHtml } from './getWebviewHtml';
 import {
   type LinkViewHostMessage,
@@ -141,6 +142,14 @@ export class LinkViewPanelManager implements vscode.Disposable {
           const fallbackWarning = this.getNativePreviewFallbackWarning(error);
           this.logger.warn(fallbackWarning);
 
+          if (isFileUrl(url)) {
+            await this.openFilePreview(vscode.Uri.parse(url), 'HTML preview');
+            void vscode.window.showWarningMessage(
+              'SideBrowser could not open the local browser preview, so it opened the local file with the built-in preview instead.'
+            );
+            return;
+          }
+
           if (getPreviewFallbackMode() === 'externalBrowser') {
             try {
               await this.openInConfiguredExternalBrowser(url);
@@ -158,6 +167,21 @@ export class LinkViewPanelManager implements vscode.Disposable {
           }
 
           await this.showOrCreateWebviewPanel(fileUri, url, reveal, fallbackWarning);
+          return;
+        }
+      }
+
+      if (isFileUrl(url)) {
+        try {
+          await this.openInLocalBrowserKernel(vscode.Uri.parse(url), url);
+          return;
+        } catch (error) {
+          const fallbackWarning = this.getNativePreviewFallbackWarning(error);
+          this.logger.warn(fallbackWarning);
+          await this.openFilePreview(vscode.Uri.parse(url), 'HTML preview');
+          void vscode.window.showWarningMessage(
+            'SideBrowser webview mode does not embed local file URLs directly, so it opened the local file with the built-in preview instead.'
+          );
           return;
         }
       }

@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
-import { validateHttpUrl } from '../../src/utils/url';
+import { isFileUrl, validateHttpUrl } from '../../src/utils/url';
 
 export function runUrlTests(): void {
   assert.equal(validateHttpUrl('http://localhost:3000').ok, true);
   assert.equal(validateHttpUrl('https://example.com').ok, true);
+  assert.equal(isFileUrl('file:///tmp/index.html'), true);
+  assert.equal(isFileUrl('https://example.com'), false);
 
   const result = validateHttpUrl('ftp://example.com');
   assert.equal(result.ok, false);
