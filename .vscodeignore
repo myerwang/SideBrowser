@@ -4,6 +4,9 @@
 src/**
 test/**
 out-test/**
+scripts/**
+prompts/**
+examples/**
 tsconfig.test.json
 package-lock.json
 debug.log
