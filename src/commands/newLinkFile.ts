@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { getExplicitUri } from '../utils/commandTarget';
 
 const DEFAULT_LINK_TEMPLATE = 'http://localhost:3000\n';
 
@@ -38,7 +39,7 @@ async function createNewLinkFile(target?: unknown): Promise<void> {
 }
 
 async function resolveTargetFolder(target?: unknown): Promise<vscode.Uri | undefined> {
-  const resource = target instanceof vscode.Uri ? target : undefined;
+  const resource = getExplicitUri(target);
   if (resource) {
     if (resource.scheme === 'file') {
       try {

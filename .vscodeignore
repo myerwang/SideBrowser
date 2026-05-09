@@ -4,9 +4,11 @@
 src/**
 test/**
 out-test/**
-scripts/**
-prompts/**
 examples/**
+out/**/*.map
+tsconfig.json
 tsconfig.test.json
 package-lock.json
 debug.log
+error-demo.html
+repo.link

@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { LinkViewPanelManager } from '../panel/LinkViewPanelManager';
+import { getExplicitUri } from '../utils/commandTarget';
 import { isSupportedPreviewFileUri } from '../utils/linkFile';
 
 export function registerOpenLinkViewCommand(
@@ -32,18 +33,6 @@ function resolveOpenTarget(target?: unknown): vscode.Uri | undefined {
   vscode.window.showErrorMessage(
     'SideBrowser needs a .link file, web file, Markdown file, PDF, image, media file, notebook, or a folder from the Explorer.'
   );
-  return undefined;
-}
-
-function getExplicitUri(target?: unknown): vscode.Uri | undefined {
-  if (target instanceof vscode.Uri) {
-    return target;
-  }
-
-  if (Array.isArray(target)) {
-    return target.find((item): item is vscode.Uri => item instanceof vscode.Uri);
-  }
-
   return undefined;
 }
 

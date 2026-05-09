@@ -4,7 +4,6 @@ import { registerOpenExternalCommand } from './openExternal';
 import { registerOpenLinkViewCommand } from './openLinkView';
 import { registerOpenLinkViewUrlCommand } from './openLinkViewUrl';
 import { registerRefreshLinkViewCommand } from './refreshLinkView';
-import { registerSetupAiPromptCommand } from './setupAiPrompt';
 import { LinkViewPanelManager } from '../panel/LinkViewPanelManager';
 
 export function registerLinkViewCommands(
@@ -16,7 +15,6 @@ export function registerLinkViewCommands(
   registerRefreshLinkViewCommand(context, panelManager);
   registerOpenExternalCommand(context, panelManager);
   registerNewLinkFileCommand(context);
-  registerSetupAiPromptCommand(context);
 }
 
 

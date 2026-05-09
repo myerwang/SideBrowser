@@ -2,7 +2,7 @@
   "name": "sidebrowser",
   "displayName": "SideBrowser",
   "description": "Open test pages and localhost apps beside your code in the same VS Code screen.",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "license": "MIT",
   "publisher": "YohjiUbun",
   "icon": "media/icon.png",
@@ -14,17 +14,24 @@
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "browser",
+    "preview",
+    "side-by-side",
+    "localhost",
+    "webview",
+    "ai",
+    "frontend",
+    "dev-server",
+    "iframe",
+    "link"
   ],
   "activationEvents": [
     "onStartupFinished",
-    "onUri",
-    "onCommand:linkView.open",
-    "onCommand:linkView.openUrl",
-    "onCommand:linkView.refresh",
-    "onCommand:linkView.openExternal",
-    "onCommand:linkView.newLinkFile",
-    "onCommand:linkView.setupAiPrompt"
+    "onUri"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -113,11 +120,6 @@
       {
         "command": "linkView.newLinkFile",
         "title": "New Link File",
-        "category": "SideBrowser"
-      },
-      {
-        "command": "linkView.setupAiPrompt",
-        "title": "Setup AI Prompt",
         "category": "SideBrowser"
       }
     ],

@@ -136,12 +136,17 @@ function launchBrowser(command: string, args: string[]): Promise<void> {
       stdio: 'ignore'
     });
 
-    child.on('error', (error) => {
+    const onError = (error: Error): void => {
+      child.removeListener('spawn', onSpawn);
       reject(error);
-    });
-
-    child.unref();
-    resolve();
+    };
+    const onSpawn = (): void => {
+      child.removeListener('error', onError);
+      child.unref();
+      resolve();
+    };
+    child.once('error', onError);
+    child.once('spawn', onSpawn);
   });
 }
 

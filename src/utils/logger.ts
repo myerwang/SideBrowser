@@ -28,17 +28,5 @@ export class LinkViewLogger implements vscode.Disposable {
   private write(level: LogLevel, message: string): void {
     const line = `[${new Date().toISOString()}] [${level.toUpperCase()}] ${message}`;
     this.outputChannel.appendLine(line);
-
-    switch (level) {
-      case 'info':
-        console.log(`[SideBrowser] ${message}`);
-        return;
-      case 'warn':
-        console.warn(`[SideBrowser] ${message}`);
-        return;
-      case 'error':
-        console.error(`[SideBrowser] ${message}`);
-        return;
-    }
   }
 }

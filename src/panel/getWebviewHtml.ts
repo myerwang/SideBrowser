@@ -485,6 +485,10 @@ export function getWebviewHtml(
         const message = event.data;
         if (message?.type === 'status' && typeof message.text === 'string') {
           setStatus(message.text);
+          return;
+        }
+        if (message?.type === 'panelState' && iframe) {
+          iframe.style.pointerEvents = message.active ? 'auto' : 'none';
         }
       });
 
@@ -532,7 +536,8 @@ function isLikelyLocalhost(url: string): boolean {
     return (
       parsed.hostname === 'localhost' ||
       parsed.hostname === '127.0.0.1' ||
-      parsed.hostname === '0.0.0.0'
+      parsed.hostname === '0.0.0.0' ||
+      parsed.hostname === '[::1]'
     );
   } catch {
     return false;

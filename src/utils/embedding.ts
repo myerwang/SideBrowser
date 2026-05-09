@@ -17,6 +17,7 @@ export async function inspectEmbeddingSupport(url: string): Promise<EmbeddingChe
   } catch {
     try {
       const response = await requestForEmbeddingInspection(url, 'GET');
+      void response.body?.cancel().catch(() => undefined);
       const inspection = inspectEmbeddingHeaders(response.headers);
       if (inspection) {
         return inspection;
@@ -39,7 +40,8 @@ async function requestForEmbeddingInspection(
   return fetch(url, {
     method,
     redirect: 'follow',
-    signal: AbortSignal.timeout(5000)
+    signal: AbortSignal.timeout(5000),
+    headers: method === 'GET' ? { Range: 'bytes=0-0' } : undefined
   });
 }
 

@@ -13,14 +13,6 @@ export interface ManagedLinkViewPanel {
 
 export interface PanelSnapshot {
   readonly currentUrl: string;
-  readonly previewSurface?:
-    | 'linkview-webview'
-    | 'native-browser'
-    | 'markdown-preview'
-    | 'pdf-preview'
-    | 'image-preview'
-    | 'media-preview'
-    | 'notebook-preview';
   readonly sourceUri: vscode.Uri;
 }
 
@@ -51,7 +43,12 @@ export type LinkViewWebviewMessage =
       readonly type: 'log';
     };
 
-export interface LinkViewHostMessage {
-  readonly text: string;
-  readonly type: 'status';
-}
+export type LinkViewHostMessage =
+  | {
+      readonly type: 'status';
+      readonly text: string;
+    }
+  | {
+      readonly type: 'panelState';
+      readonly active: boolean;
+    };

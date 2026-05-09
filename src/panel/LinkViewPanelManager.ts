@@ -58,7 +58,6 @@ export class LinkViewPanelManager implements vscode.Disposable {
       if (state) {
         return {
           currentUrl: state.currentUrl,
-          previewSurface: 'linkview-webview',
           sourceUri: state.sourceUri
         };
       }
@@ -83,54 +82,29 @@ export class LinkViewPanelManager implements vscode.Disposable {
       const snapshotSourceUri = fileUri;
       const url = source.url;
 
+      this.lastPreview = {
+        currentUrl: url,
+        sourceUri: snapshotSourceUri
+      };
+
       switch (source.kind) {
         case 'markdown':
-          this.lastPreview = {
-            currentUrl: url,
-            previewSurface: 'markdown-preview',
-            sourceUri: snapshotSourceUri
-          };
           await this.openMarkdownPreview(sourceUri);
           return;
         case 'pdf':
-          this.lastPreview = {
-            currentUrl: url,
-            previewSurface: 'pdf-preview',
-            sourceUri: snapshotSourceUri
-          };
           await this.openFilePreview(sourceUri, 'PDF preview');
           return;
         case 'image':
-          this.lastPreview = {
-            currentUrl: url,
-            previewSurface: 'image-preview',
-            sourceUri: snapshotSourceUri
-          };
           await this.openFilePreview(sourceUri, 'image preview');
           return;
         case 'media':
-          this.lastPreview = {
-            currentUrl: url,
-            previewSurface: 'media-preview',
-            sourceUri: snapshotSourceUri
-          };
           await this.openFilePreview(sourceUri, 'media preview');
           return;
         case 'notebook':
-          this.lastPreview = {
-            currentUrl: url,
-            previewSurface: 'notebook-preview',
-            sourceUri: snapshotSourceUri
-          };
           await this.openFilePreview(sourceUri, 'notebook preview');
           return;
         case 'browser':
         default:
-          this.lastPreview = {
-            currentUrl: url,
-            previewSurface: 'native-browser',
-            sourceUri: snapshotSourceUri
-          };
           break;
       }
 
@@ -250,7 +224,6 @@ export class LinkViewPanelManager implements vscode.Disposable {
       this.activePanelKey = key;
       this.lastPreview = {
         currentUrl: url,
-        previewSurface: 'linkview-webview',
         sourceUri: fileUri
       };
       return;
@@ -262,7 +235,7 @@ export class LinkViewPanelManager implements vscode.Disposable {
       vscode.ViewColumn.Active,
       {
         enableScripts: true,
-        retainContextWhenHidden: true
+        retainContextWhenHidden: false
       }
     );
 
@@ -286,14 +259,23 @@ export class LinkViewPanelManager implements vscode.Disposable {
       }
     });
 
+    let lastActive: boolean | undefined;
     panel.onDidChangeViewState((event) => {
-      if (event.webviewPanel.active) {
+      const isActive = event.webviewPanel.active;
+      if (isActive) {
         this.activePanelKey = key;
         this.lastPreview = {
           currentUrl: state.currentUrl,
-          previewSurface: 'linkview-webview',
           sourceUri: state.sourceUri
         };
+      }
+      if (lastActive !== isActive) {
+        lastActive = isActive;
+        const message: LinkViewHostMessage = {
+          type: 'panelState',
+          active: isActive
+        };
+        void state.panel.webview.postMessage(message);
       }
     });
 
@@ -442,26 +424,6 @@ export class LinkViewPanelManager implements vscode.Disposable {
   private getNativePreviewFallbackWarning(error: unknown): string {
     const detail = this.getErrorMessage(error);
     return `Unable to open the local browser-kernel preview. ${detail}`;
-  }
-
-  private getPreviewSurfaceLabel(surface: PanelSnapshot['previewSurface']): string {
-    switch (surface) {
-      case 'linkview-webview':
-        return 'SideBrowser Webview';
-      case 'markdown-preview':
-        return 'VS Code Markdown Preview';
-      case 'pdf-preview':
-        return 'VS Code Default PDF Editor';
-      case 'image-preview':
-        return 'VS Code Image Preview';
-      case 'media-preview':
-        return 'VS Code Media Preview';
-      case 'notebook-preview':
-        return 'VS Code Notebook Editor';
-      case 'native-browser':
-      default:
-        return 'VS Code Browser Preview';
-    }
   }
 
   private async openInConfiguredExternalBrowser(url: string): Promise<void> {
